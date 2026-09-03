@@ -1,4 +1,4 @@
-package com.voting;
+package com.example;
 
 public class VotingEligibilitySystem {
 
