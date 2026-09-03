@@ -16,8 +16,7 @@ pipeline {
 
         stage('Run Application') {
             steps {
-                echo 'Running Voting Eligibility System...'
-                bat 'mvn exec:java'
+                bat 'mvn exec:java -Dexec.mainClass=com.example.VotingEligibilitySystem'
             }
         }
 
