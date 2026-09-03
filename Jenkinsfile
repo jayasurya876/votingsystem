@@ -1,39 +1,37 @@
 pipeline {
     agent any
-    tools {
-        maven 'M3'
-    }
+
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out source code from GitHub...'
-                git
- branch: 'main',
-                    url:
- 'https://github.com/kavin82007/voting-eligibility-system.git'
-            }
-        }
+
         stage('Build') {
             steps {
-                echo 'Building the Maven application...'
-                bat
- 'mvn clean install'
+                echo 'Building Maven application...'
+                bat 'mvn clean package'
             }
         }
+
         stage('Run Application') {
             steps {
                 echo 'Running Voting Eligibility System...'
-                bat
+                bat 'mvn exec:java'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                bat 'mvn test'
             }
         }
     }
+
     post {
- 'java -cp target\\voting-eligibility-system-1.0-SNAPSHOT.jar com.example.VotingEligibilitySystem'
         success {
-            echo 'CI/CD Pipeline completed successfully!'
+            echo 'Build completed successfully!'
         }
+
         failure {
-            echo 'CI/CD Pipeline failed.'
+            echo 'Build failed!'
         }
     }
 }
